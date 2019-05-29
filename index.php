@@ -54,4 +54,18 @@ if ($call != 'product') {
 http_response_code($responseCode);
 echo $data;
 
+
+/ set the response code to 200 ok by default
+// see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_errors
+$responseCode = 200;
+$data = null;
+
+// extract api end point from request uri 
+if (strstr($path, $apiRoot) != false){
+    $call = substr($path, strlen($apiRoot)); 
+    if (strstr($call, "?") != false){
+        $call = strstr($call, "?", true);
+    }
+}
+
 ?>
