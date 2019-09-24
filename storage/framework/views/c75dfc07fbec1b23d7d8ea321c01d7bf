@@ -1,0 +1,27 @@
+<?php $__env->startSection('body'); ?>
+                <div class="title">Laravel 5</div>
+                <div><h1>Hello All. Welcome to home page</h1></div>
+                <?php//  print_r($subjects); ?>
+                <?php//  print_r($marks); ?>
+                <?php //echo $data; ?>
+
+                <br>
+                <!-- <?php echo e($data); ?>  it will not run the scriot -->
+                 <!-- {<?php echo $data; ?>}   it will run the script -->
+                <!-- {{ $data }}   to tell the laravel that this is the not part of ;aravel -->
+                <h2>
+                  <!--   <?php $u = "data not found"; ?>
+                    <?php if($data == "Hello"): ?>
+                        <?php echo e($data); ?>
+
+                    <?php elseif($data == "hii krina"): ?>
+                        <?php echo e($data); ?>
+
+                    <?php else: ?>
+                        <?php echo e($u); ?>
+
+                    <?php endif; ?> -->
+                </h2>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout/master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
