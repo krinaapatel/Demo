@@ -1,0 +1,261 @@
+<?php
+use App\Student;
+use App\Employee;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/', function () {
+    return view('home');
+});
+
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
+Route::resource('searchInstitute','InstituteController');
+Route::resource('searchAttendance','AttendanceController');
+//Route::resource('institute','InstituteController');
+Route::resource('searchDesignation','DesignationController');
+Route::resource('designation','DesignationController');
+Route::resource('searchEmployee','EmployeeController');
+Route::resource('searchStandard','StandardController');
+Route::resource('searchSubject','SubjectController');
+Route::resource('searchReligion','ReligionController');
+Route::resource('searchCast','CastController');
+Route::resource('searchSubcaste','SubcasteController');
+Route::resource('searchGroup','GroupController');
+Route::resource('searchHoliday','HolidayController');
+Route::resource('searchStudent','StudentController');
+Route::resource('searchFees','FeesController');
+Route::resource('searchFeesHead','FeesHeadController');
+Route::resource('studentattendance','AttendanceController');
+Route::resource('feesCollect','FeesCollectController');
+Route::resource('user','UserController');
+Route::resource('role','RoleController');
+Route::resource('searchGenerateLC','GenerateLCController');
+Route::resource('digiApi','DigiapiController');
+Route::resource('timetablestud','TimetableController');
+Route::resource('feedSeach','FeedController');
+Route::resource('deviceSeach','DeviceController');
+Route::resource('sendSMS','SendSMS');
+//exam
+Route::resource('searchExam','ExamsController');
+Route::get('/createExam','ExamsController@create');
+Route::get('/examsubject','ExamsController@examsubject');
+//end Exam
+//exam type
+Route::resource('createExamType','ExamTypeController');
+Route::get('/selectExamType','ExamTypeController@selectExamType');
+//end Exam type
+Route::get('/searchGrStudent','GenerateLCController@searchGrStudent');
+Route::get('/alumniStudent','StudentController@alumniStudent');
+Route::post('/searchAttendance','AttendanceController@searchAttendance');
+Route::post('/searchStudentData','FeesCollectController@searchStudentData');
+Route::get('/monthlyFees','FeesCollectController@monthlyFees');
+
+
+Route::post('/attentAttendance','AttendanceController@attentAttendance');
+Route::get('/subinstitute','InstituteController@getSubInstitute');
+Route::get('/allInstitute','EmployeeController@allInstitute');
+Route::get('/allAcadamicYear','EmployeeController@allAcadamicYear');
+Route::get('/allStandard','SubjectController@allStandard');
+Route::get('/selectDevision','SubjectController@selectDevision');
+Route::get('/allSection','SubjectController@allSection');
+Route::get('/listReligion','CastController@listReligion');
+Route::get('/listCaste','SubcasteController@listCaste');
+Route::get('/selectSubject','SubjectController@selectSubject');
+Route::get('/selectTeacher','EmployeeController@selectTeacher');
+Route::get('/listAdmissionYear','StudentController@listAdmissionYear');
+Route::get('/listAcademicYear','StudentController@listAcademicYear');
+Route::get('/subAllInstitute','EmployeeController@subInstitute');
+Route::get('/employeeselect','EmployeeController@employeeselect');
+Route::get('/designationList','EmployeeController@designationList');
+Route::get('/rolelist','EmployeeController@rolelist');
+Route::get('/rolelist','EmployeeController@rolelist');
+Route::get('/search_employee','EmployeeController@search_employee');
+Route::get('/search_institute','InstituteController@search_institute');
+Route::get('/search_standard','StandardController@search_standard');
+Route::get('/search_student','StudentController@search_student');
+Route::post('/searchDailyAttendanceControl','AttendanceController@searchDailyAttendanceControl');
+Route::post('/searchStudentControl','SendSMSController@searchStudentControl');
+Route::post('/sendSMSStudent','SendSMSController@sendSMSStudent');
+Route::get('/listFeesHead','FeesHeadController@listFeesHead');
+
+Route::get('/dailyAttendance','AttendanceController@dailyAttendance');
+
+//app api route
+//Route::get('/studentLogin','DigiapiControlle@studentLogin');
+/* Route::get('/institute','DigiapiControlle@getInstitute'); */
+//Route::get('/holidays','DigiapiControlle@getHolidays');
+//Route::get('/updateToken','DigiapiControlle@updateToken');
+
+
+
+
+
+Route::group(array('prefix' => 'api'), function() {
+   // Route::resource('restful-apis','DigiapiControlle');
+    Route::any('/addFeed','DigiapiControlle@addFeed');
+	Route::any('/getFeed','DigiapiControlle@getFeed');
+	Route::post('/holidays','DigiapiControlle@getHolidays');
+	Route::post('/editStudentProfile','DigiapiControlle@editStudentProfile');
+	Route::post('/studentLogin','DigiapiControlle@studentLogin');
+	Route::post('/updateToken','DigiapiControlle@updateToken');
+	Route::post('/institute','DigiapiControlle@getInstitute');
+	Route::post('/attendance','DigiapiControlle@getAttendance');
+	Route::post('/timetable','DigiapiControlle@getTimetable');
+	Route::post('/teacherLogin','DigiapiControlle@teacherLogin');
+	Route::post('/standardList','DigiapiControlle@standardList');
+	Route::post('/sectionList','DigiapiControlle@sectionList');
+	Route::post('/teacherFeedList','DigiapiControlle@teacherFeedList');
+	Route::post('/checkDevice','DigiapiControlle@checkDevice');
+	Route::post('/feedLike','DigiapiControlle@feedLike');
+	Route::post('/tagListStudent','DigiapiControlle@tagListStudent');
+	Route::post('/updateProfile','DigiapiControlle@updateProfile');
+	Route::post('/addComment','DigiapiControlle@addComment');
+	Route::post('/listLike','DigiapiControlle@listLike');
+	Route::post('/listComment','DigiapiControlle@listComment');
+	Route::post('/deleteComment','DigiapiControlle@deleteComment');
+	Route::post('/searchFeed','DigiapiControlle@searchFeed');
+	Route::post('/addCommentReply','DigiapiControlle@addCommentReply'); 
+	Route::post('/forgetpassword','DigiapiControlle@forgetpassword');
+	Route::post('/teacherFields','DigiapiControlle@teacherFields');
+	Route::post('/updateAccountDetail','DigiapiControlle@updateAccountDetail');
+	Route::post('/updatePersonalDetail','DigiapiControlle@updatePersonalDetail');
+	Route::post('/updateServiceDetail','DigiapiControlle@updateServiceDetail');
+	Route::post('/addServiceDetail','DigiapiControlle@addServiceDetail');
+	Route::post('/listServiceDetail','DigiapiControlle@listServiceDetail');
+	Route::post('/resetPassword','DigiapiControlle@resetPassword');
+	Route::post('/addEducationDetail','DigiapiControlle@addEducationDetail');
+	Route::post('/editEducationDetail','DigiapiControlle@editEducationDetail');
+	Route::post('/listTeacherEducation','DigiapiControlle@listTeacherEducation');
+	Route::post('/deleteTeacherEducation','DigiapiControlle@deleteTeacherEducation');
+	Route::post('/deleteFeed','DigiapiControlle@deleteFeed');
+	Route::post('/updateFeed','DigiapiControlle@updateFeed');
+	Route::post('/studentListAttendance','DigiapiControlle@studentListAttendance');
+	Route::post('/studentListResult','DigiapiControlle@studentListResult');
+	Route::post('/fillAttendance','DigiapiControlle@fillAttendance');
+	Route::post('/selectStandardSubject','DigiapiControlle@selectStandardSubject');
+	Route::post('/storeExam','DigiapiControlle@storeExam');
+	Route::post('/examList','DigiapiControlle@examList');
+	Route::post('/addResult','DigiapiControlle@addResult');
+	Route::post('/searchResultStudent','DigiapiControlle@searchResultStudent');
+	Route::post('/updateExamStatus','DigiapiControlle@updateExamStatus');
+	Route::post('/examFilter','DigiapiControlle@examFilter');
+	Route::post('/checkResultStatus','DigiapiControlle@checkResultStatus');
+	Route::post('/studentExamList','DigiapiControlle@studentExamList');
+	Route::post('/examFields','DigiapiControlle@examFields');
+	Route::post('/studentMedical','DigiapiControlle@studentMedical');
+	Route::post('/updateStudentMedical','DigiapiControlle@updateStudentMedical');
+	Route::post('/viewStudentMedical','DigiapiControlle@viewStudentMedical');
+	Route::post('/studentTransportation','DigiapiControlle@studentTransportation');
+	Route::post('/updateStudentTransportation','DigiapiControlle@updateStudentTransportation');
+	Route::post('/viewStudentTransportation','DigiapiControlle@viewStudentTransportation');
+	Route::post('/studentExamFilterList','DigiapiControlle@studentExamFilterList');
+	
+});
+
+
+//end app api route
+//Route::get('/searchInstitute', function () { return view('searchInstitute'); });
+Route::get('/designation', function () { return view('designation'); });
+Route::get('/trust', function () { return view('trust'); });
+Route::get('/trustee', function () { return view('trustee'); });
+Route::get('/designation', function () { return view('designation'); });
+//Route::get('/subject', function () { return view('subject'); });
+Route::get('/standard', function () { return view('standard'); });
+Route::get('/dashbord', function () { return view('dashbord'); });
+Route::any('/search',function(){
+  // echo  $q = Input::get ( 'instituteId' );
+   $input = Input::all();
+
+    $student = Student::where('instituteId','=',$input['instituteId'])
+    ->Where('subInstituteId','=',$input['subInstituteId'])
+    ->Where('section','LIKE','%'.$input['section'].'%')
+    ->Where('standardId','=',$input['standardId'])
+    ->Where('division','LIKE','%'.$input['division'][0].'%')
+    ->get();
+    //SELECT *  FROM `studentmst` WHERE `instituteId` = 11 AND `subInstituteId` = 0 AND `section` LIKE '%Secondary%' AND `standardId` = 2 AND `division` LIKE '%A%'
+    $student = json_decode(json_encode($student), True);
+    if(count($student) > 0)
+    
+        return view('attendance', compact('student'));
+        
+    else return view ('welcome')->withMessage('No Details found. Try to search again !');
+});
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', function(){
+    //echo "Hello Admin";
+    //return redirect('/institute');
+    return view('/dashbord');
+})->middleware('auth','Admin');
+
+Route::get('/superAdmin', function(){
+   
+    return view('/dashbord');
+})->middleware('auth','SuperAdmin');
+
+Route::get('/clerk', function(){
+    return view('/dashbord');
+})->middleware('auth','Clerk');
+
+Route::get('/teacher', function(){
+   // echo "Hello Teacher";
+   return view('/dashbord');
+  // return redirect('/home')->with('warning', 'Limited Access'); 
+  // return view('/home');
+})->middleware('auth','Teacher');
+Route::any('/searchEmployeeData',function(){
+    // echo  $q = Input::get ( 'instituteId' );
+     $input = Input::all();
+    $name=$input['name'];
+    $empTypeId=$input['empTypeId'];
+      $staffTypeId=$input['staffTypeId'];
+      $bloodGroup=$input['bloodGroup'];
+      $deleteData=$input['deleteData'];
+     $and='';
+     if($empTypeId)
+     {
+        $and.='AND empTypeId LIKE "%'.$empTypeId.'%" ';
+     }
+     elseif($staffTypeId){
+        $and.='AND staffTypeId LIKE "%'.$staffTypeId.'%"';
+    }
+    elseif($bloodGroup){
+        $and.='AND bloodGroup LIKE "%'.$bloodGroup.'%"';
+
+    }
+  
+     $employeemst = DB::select('select * from employeemst where (empFName LIKE "%'.$name.'%" OR empMName LIKE "%'.$name.'%" OR empLName LIKE"%'.$name.'%")  '.$and.' AND deleteData = "'.$deleteData.'"');
+     $employeemst = json_decode(json_encode($employeemst), True);
+     print_r($employeemst);
+     echo count($employeemst);
+     
+
+      if(count($employeemst) > 0){
+        echo "if";
+        return view('searchEmployee', compact('employeemst'));
+      }
+      else   
+     {
+        echo "elseif";
+      return view('searchEmployee', compact('employeemst'));    
+     } 
+  });
